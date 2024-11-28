@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shash Live Temperature Readings</title>
+    <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-database-compat.js"></script>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(to bottom, #0078d4, #f4f4f4);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            color: #333;
+        }
+        .container {
+            background: #ffffff;
+            padding: 20px 40px;
+            border-radius: 10px;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+            text-align: center;
+        }
+        h1 {
+            font-size: 2.5em;
+            color: #0078d4;
+            margin-bottom: 20px;
+        }
+        p {
+            font-size: 1.2em;
+            color: #555;
+        }
+        #temperature {
+            font-size: 3em;
+            color: #ff5722;
+            font-weight: bold;
+        }
+        footer {
+            margin-top: 20px;
+            font-size: 0.9em;
+            color: #aaa;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Shash Live <br>Temperature Readings</h1>
+        <p>Current Temperature: <span id="temperature">Loading...</span> °F</p>
+        <footer>Powered by ShashHUGEBrain & Firebase & ESP32</footer>
+    </div>
+
+    <script>
+        // Firebase configuration
+        const firebaseConfig = {
+            apiKey: "AIzaSyBqQ0VCqB06xRnGK6tTpztRG0KnYl36p1Q",
+            authDomain: "livetemp-7257d.firebaseapp.com",
+            databaseURL: "https://livetemp-7257d-default-rtdb.firebaseio.com",
+            projectId: "livetemp-7257d",
+            storageBucket: "livetemp-7257d.firebasestorage.app",
+            messagingSenderId: "405018858346",
+            appId: "1:405018858346:web:b3847bf3226f71dd494b13",
+            measurementId: "G-9D6L37S9ES"
+        };
+
+        // Initialize Firebase
+        const app = firebase.initializeApp(firebaseConfig);
+        const db = firebase.database();
+
+        // Reference the temperature path
+        const temperatureRef = db.ref("/sensor/temperature");
+
+        // Listen for changes in temperature
+        temperatureRef.on("value", (snapshot) => {
+            const temperature = snapshot.val();
+            document.getElementById("temperature").textContent = temperature;
+        });
+    </script>
+</body>
+</html>
