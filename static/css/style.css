@@ -579,29 +579,110 @@ canvas {
 /* Responsive adjustments */
 @media (max-width: 768px) {
     .expanded-chart-overlay {
-        padding: 20px;
+        padding: 10px;
+        overflow-y: auto;  /* Make it scrollable */
+        -webkit-overflow-scrolling: touch;  /* Smooth scrolling on iOS */
     }
     
     .expanded-chart-header {
-        flex-direction: column;
-        gap: 10px;
-        text-align: center;
-    }
-    
-    .expanded-chart-container {
-        height: calc(100% - 140px);
-    }
-    
-    .chart-controls {
-        flex-direction: column;
-        gap: 10px;
-        align-items: center;
+        position: sticky;  /* Keep header visible while scrolling */
+        top: 0;
+        z-index: 10;
+        flex-direction: column;  /* Stack elements vertically */
+        gap: 8px;
+        padding: 10px;
+        margin-bottom: 10px;
+        background: rgba(255, 255, 255, 0.95);  /* More opaque background */
     }
     
     .expanded-chart-header h2 {
-        font-size: 1.2em;
+        font-size: 0.9em;
     }
-} 
+
+    .expanded-chart-header .time-range {
+        font-size: 0.8em;
+        padding: 4px 8px;
+    }
+    
+    .expanded-controls {
+        width: 100%;
+        justify-content: center;
+        gap: 8px;
+    }
+    
+    .expanded-controls button {
+        padding: 4px 8px;
+        font-size: 0.75em;
+    }
+    
+    .expanded-chart-container {
+        height: 65vh;  /* Changed to 65% of viewport height */
+        padding: 8px;
+        margin: 0 auto;
+        width: calc(100% - 16px);
+    }
+    
+    .chart-controls {
+        padding: 8px;
+        margin: 8px auto;
+    }
+    
+    .control-group {
+        gap: 6px;
+    }
+    
+    .control-btn {
+        padding: 6px 10px;
+        font-size: 0.75rem;
+    }
+    
+    .bottom-controls {
+        flex-direction: column;  /* Stack controls vertically */
+        gap: 8px;
+        margin-top: 8px;
+        padding-top: 8px;
+    }
+
+    .interaction-hint {
+        width: 100%;
+        justify-content: center;
+        font-size: 0.75em;
+        padding: 6px;
+    }
+}
+
+/* Even smaller screens */
+@media (max-width: 480px) {
+    .expanded-chart-container {
+        height: 65vh;  /* Keep consistent height on smaller screens */
+    }
+
+    .expanded-chart-header {
+        padding: 8px;
+    }
+
+    .control-btn {
+        padding: 4px 8px;
+    }
+
+    .control-btn span {
+        display: none;  /* Hide button text */
+    }
+
+    .control-btn i {
+        margin: 0;
+        font-size: 1em;
+    }
+
+    .interaction-hint {
+        font-size: 0.7em;
+    }
+
+    .time-range {
+        font-size: 0.7em;
+        padding: 4px 8px;
+    }
+}
 
 /* Update the expanded chart container canvas styles */
 .expanded-chart-container canvas {
