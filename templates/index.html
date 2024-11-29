@@ -4,19 +4,94 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Shashwat Live Temperature Graph</title>
+    <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-database-compat.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/hammer.js/2.0.8/hammer.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/chartjs-plugin-zoom/2.0.1/chartjs-plugin-zoom.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
 </head>
 <body>
     <div class="container">
         <h1>Shash Live Temperature Readings</h1>
-        <p>Current Temperature: <span id="temperature">Loading...</span> °F</p>
+        <p><span id="temperature">Loading...</span> °F</p>
         <div class="chart-container">
             <canvas id="temperatureChart"></canvas>
+        </div>
+        <div class="prank-link">
+            <a href="#" id="sleepCamLink">📸 View Shash Sleep Cam</a>
         </div>
         <footer>Powered by ShashHUGEBrain & Flask & Firebase & ESP32</footer>
     </div>
 
+    <div id="expanded-chart-overlay" class="expanded-chart-overlay">
+        <div class="expanded-chart-header">
+            <h2>Temperature History</h2>
+            <div class="time-range">
+                <i class="far fa-clock"></i>
+                <span class="range-value">Last 5 readings (5min intervals)</span>
+            </div>
+            <div class="expanded-controls">
+                <button class="view-toggle-btn" title="Toggle between 24h/7d view">24h View</button>
+                <button class="close-btn" title="Close expanded view">×</button>
+            </div>
+        </div>
+        <div class="expanded-chart-container">
+            <canvas id="expandedTemperatureChart"></canvas>
+        </div>
+        <div class="chart-controls">
+            <div class="zoom-controls">
+                <div class="control-group">
+                    <button class="control-btn zoom-in-btn" title="Zoom in">
+                        <i class="fas fa-search-plus"></i>
+                        <span>Zoom In</span>
+                    </button>
+                    <button class="control-btn zoom-out-btn" title="Zoom out">
+                        <i class="fas fa-search-minus"></i>
+                        <span>Zoom Out</span>
+                    </button>
+                    <button class="control-btn reset-zoom-btn" title="Reset view">
+                        <i class="fas fa-undo"></i>
+                        <span>Reset</span>
+                    </button>
+                </div>
+            </div>
+            <div class="bottom-controls">
+                <div class="interaction-hint">
+                    <i class="fas fa-mouse"></i>
+                    <span>Scroll to zoom • Drag to pan</span>
+                </div>
+                <div class="time-range">
+                    <i class="far fa-clock"></i>
+                    <span class="range-label">Showing: </span>
+                    <span class="range-value">Last 24 hours</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <script src="{{ url_for('static', filename='js/chart.js') }}"></script>
+
+    <!-- Add modal for prank -->
+    <div id="prankModal" class="prank-modal">
+        <div class="prank-content">
+            <span class="close-prank">&times;</span>
+            <img src="{{ url_for('static', filename='images/sleepy-dog.jpeg') }}" alt="Sleepy Dog" class="prank-image">
+            <p class="prank-text">Weirdo</p>
+        </div>
+    </div>
+
+    <!-- Add JavaScript for prank modal -->
+    <script>
+    document.getElementById('sleepCamLink').addEventListener('click', function(e) {
+        e.preventDefault();
+        document.getElementById('prankModal').style.display = 'flex';
+    });
+
+    document.querySelector('.close-prank').addEventListener('click', function() {
+        document.getElementById('prankModal').style.display = 'none';
+    });
+    </script>
 </body>
 </html> 
