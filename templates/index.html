@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shashwat Live Temperature Graph</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h1>Shash Live Temperature Readings</h1>
+        <p>Current Temperature: <span id="temperature">Loading...</span> °F</p>
+        <div class="chart-container">
+            <canvas id="temperatureChart"></canvas>
+        </div>
+        <footer>Powered by ShashHUGEBrain & Flask & Firebase & ESP32</footer>
+    </div>
+
+    <script src="{{ url_for('static', filename='js/chart.js') }}"></script>
+</body>
+</html> 
